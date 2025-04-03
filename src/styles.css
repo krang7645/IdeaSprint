@@ -1,0 +1,30 @@
+/* Tailwind CSS のインポート */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* カスタムスタイル */
+body {
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'メイリオ', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* テキストエリアのリサイズを縦方向のみに制限 */
+textarea {
+  resize: vertical;
+}
+
+/* スピナーアニメーション用スタイル */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
