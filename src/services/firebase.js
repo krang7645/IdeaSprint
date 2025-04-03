@@ -7,12 +7,13 @@ import { getFunctions } from 'firebase/functions';
 // Firebaseプロジェクト設定
 // 実際のプロジェクトでは.envファイルに保存することを推奨
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "your-project-id.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBZF9V3lLaphhgMPbOKhPYY2lPaA_RJMrc",
+  authDomain: "ideasprint-6cd60.firebaseapp.com",
+  projectId: "ideasprint-6cd60",
+  storageBucket: "ideasprint-6cd60.firebasestorage.app",
+  messagingSenderId: "373203500108",
+  appId: "1:373203500108:web:c421cea6d47314e56908e9",
+  measurementId: "G-N6CY7LJZ7X"
 };
 
 // Firebaseの初期化
