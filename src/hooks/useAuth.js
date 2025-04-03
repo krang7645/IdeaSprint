@@ -1,9 +1,9 @@
 // src/hooks/useAuth.js
 import { useState, useEffect, createContext, useContext } from 'react';
-import { 
-  signInWithGoogle, 
-  signInWithGithub, 
-  logoutUser, 
+import {
+  signInWithGoogle,
+  signInWithGithub,
+  logoutUser,
   onAuthStateChange,
   getUserProfile
 } from '../services/auth';
@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChange(async (user) => {
       setCurrentUser(user);
       setLoading(true);
-      
+
       try {
         if (user) {
           // ユーザーがログインしている場合、プロフィール情報を取得
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (provider) => {
     setError(null);
     setLoading(true);
-    
+
     try {
       if (provider === 'google') {
         await signInWithGoogle();
@@ -63,4 +63,70 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  
+  };
+
+// ログアウト
+const logout = async () => {
+  setError(null);
+  setLoading(true);
+
+  try {
+    await logoutUser();
+  } catch (err) {
+    console.error("ログアウトエラー:", err);
+    setError("ログアウトに失敗しました");
+  } finally {
+    setLoading(false);
+  }
+};
+
+// プロフィールをリロード
+const reloadProfile = async () => {
+  if (!currentUser) return;
+
+  setLoading(true);
+  try {
+    const profile = await getUserProfile(currentUser.uid);
+    setUserProfile(profile);
+  } catch (err) {
+    console.error("プロフィール再取得エラー:", err);
+    setError("ユーザー情報の更新に失敗しました");
+  } finally {
+    setLoading(false);
+  }
+};
+
+// エラーをクリア
+const clearError = () => {
+  setError(null);
+};
+
+// コンテキスト値
+const value = {
+  currentUser,
+  userProfile,
+  loading,
+  error,
+  login,
+  logout,
+  reloadProfile,
+  clearError
+};
+
+return (
+  <AuthContext.Provider value={value}>
+    {children}
+  </AuthContext.Provider>
+);
+};
+
+// カスタムフック
+export const useAuth = () => {
+const context = useContext(AuthContext);
+if (context === null) {
+  throw new Error("useAuth must be used within an AuthProvider");
+}
+return context;
+};
+
+export default useAuth;
