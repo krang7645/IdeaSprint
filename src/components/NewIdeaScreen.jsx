@@ -5,40 +5,40 @@ import useIdeas from '../hooks/useIdeas';
 
 const NewIdeaScreen = ({ navigateTo }) => {
   const { addNewIdea, loading, error } = useIdeas();
-  
+
   const [newIdeaData, setNewIdeaData] = useState({
     title: '',
     description: ''
   });
-  
+
   const [formErrors, setFormErrors] = useState({
     title: '',
     description: ''
   });
-  
+
   const handleCreateIdea = async () => {
     // 入力検証
     const errors = {};
-    
+
     if (!newIdeaData.title.trim()) {
       errors.title = 'タイトルを入力してください';
     }
-    
+
     if (!newIdeaData.description.trim()) {
       errors.description = '概要を入力してください';
     } else if (newIdeaData.description.length < 100) {
       errors.description = '概要は100文字以上で入力してください';
     }
-    
+
     // エラーがあれば表示して処理を中断
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       return;
     }
-    
+
     // エラーがなければリセット
     setFormErrors({ title: '', description: '' });
-    
+
     // アイデア作成
     const result = await addNewIdea(newIdeaData);
     if (result) {
@@ -46,19 +46,19 @@ const NewIdeaScreen = ({ navigateTo }) => {
       navigateTo('home');
     }
   };
-  
+
   return (
     <div className="p-4 max-w-4xl mx-auto">
-      <button 
+      <button
         onClick={() => navigateTo('home')}
         className="mb-4 text-gray-600 hover:text-gray-900 flex items-center"
       >
         <ChevronRight size={16} className="transform rotate-180 mr-1" />
         ダッシュボードに戻る
       </button>
-      
+
       <h1 className="text-2xl font-bold mb-6">新しいアイデアを追加</h1>
-      
+
       {/* エラー表示 */}
       {error && (
         <div className="mb-4 bg-red-50 border-l-4 border-red-400 p-4">
@@ -74,14 +74,14 @@ const NewIdeaScreen = ({ navigateTo }) => {
           </div>
         </div>
       )}
-      
+
       <div className="bg-white rounded-lg border p-6 mb-6">
         <div className="mb-4">
           <label className="block text-gray-700 font-medium mb-2">
             アイデアのタイトル <span className="text-red-500">*</span>
           </label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             className={`w-full border ${formErrors.title ? 'border-red-500' : 'border-gray-300'} rounded-lg p-3`}
             placeholder="例: AIを活用した健康管理アプリ"
             value={newIdeaData.title}
@@ -91,7 +91,7 @@ const NewIdeaScreen = ({ navigateTo }) => {
             <p className="mt-1 text-sm text-red-600">{formErrors.title}</p>
           )}
         </div>
-        
+
         <div className="mb-6">
           <label className="block text-gray-700 font-medium mb-2">
             アイデアの概要説明 <span className="text-red-500">*</span>
@@ -99,7 +99,7 @@ const NewIdeaScreen = ({ navigateTo }) => {
           <p className="text-sm text-gray-500 mb-2">
             ※ 100文字以上で入力してください（現在: {newIdeaData.description.length}文字）
           </p>
-          <textarea 
+          <textarea
             className={`w-full border ${formErrors.description ? 'border-red-500' : 'border-gray-300'} rounded-lg p-3 min-h-32`}
             placeholder="あなたのアイデアを詳しく説明してください..."
             value={newIdeaData.description}
@@ -109,7 +109,7 @@ const NewIdeaScreen = ({ navigateTo }) => {
             <p className="mt-1 text-sm text-red-600">{formErrors.description}</p>
           )}
         </div>
-        
+
         <div className="flex items-center justify-between border-t pt-4">
           <div>
             <p className="text-sm text-gray-600 mb-1">注意事項:</p>
@@ -119,7 +119,7 @@ const NewIdeaScreen = ({ navigateTo }) => {
               <li>消滅したアイデアは「墓場」に移動し、他のユーザーが引き継げるようになります</li>
             </ul>
           </div>
-          <button 
+          <button
             className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium"
             onClick={handleCreateIdea}
             disabled={loading}
@@ -128,7 +128,7 @@ const NewIdeaScreen = ({ navigateTo }) => {
           </button>
         </div>
       </div>
-      
+
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
         <div className="flex items-start">
           <AlertTriangle size={20} className="text-yellow-500 mt-1 mr-2 flex-shrink-0" />
@@ -144,3 +144,6 @@ const NewIdeaScreen = ({ navigateTo }) => {
       </div>
     </div>
   );
+};
+
+export default NewIdeaScreen;
