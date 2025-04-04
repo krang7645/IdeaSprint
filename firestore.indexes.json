@@ -27,16 +27,6 @@
             "order": "ASCENDING"
           }
         ]
-      },
-      {
-        "collectionGroup": "deadIdeas",
-        "queryScope": "COLLECTION",
-        "fields": [
-          {
-            "fieldPath": "expired_at",
-            "order": "DESCENDING"
-          }
-        ]
       }
     ],
     "fieldOverrides": []
